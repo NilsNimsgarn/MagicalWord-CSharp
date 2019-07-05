@@ -1,0 +1,68 @@
+using System;
+using System.Text;
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int anzahl = Convert.ToInt32(Console.ReadLine());
+            int lang = Convert.ToInt32(Console.ReadLine());
+            string lineinput = Console.ReadLine();
+            
+            byte[] charByte = Encoding.ASCII.GetBytes("");
+            string erg = "";
+            
+            for (int x = 0; x < lang; x++)
+            {
+                charByte = Encoding.ASCII.GetBytes(lineinput.Substring(x,1));
+                bool p = isPrime(charByte[0]);
+                int y = 0;
+                int z = 0;
+                
+                // hier jetzt das charbyte raufrechnen bis p gefunden
+                for (y = charByte[0]; y < 200; y++)
+                {
+                    p = isPrime(y);
+                    if (p == true)
+                    {
+                        break;
+                    }
+                }
+                // hier jetzt das charbyte runterrechnen bis p gefunden
+                for (z = charByte[0]; z > 10; z--)
+                {
+                    p = isPrime(z);
+                    if (p == true)
+                    {
+                        break;
+                    }
+                }
+                // hier vergleichen welcher wert näher dran ist
+                int diff1 = charByte[0]-z;
+                int diff2 = y - charByte[0];
+                if (diff1 <= diff2)
+                {
+                    erg+=(char)z;
+                }
+                else
+                {
+                    erg+=(char)y;
+                }
+            }
+            Console.WriteLine(erg);
+        }
+        
+        public static bool isPrime(int number)
+        {
+            int start = 2;
+            double limit = Math.Sqrt(number);
+            while (start <= limit)
+            {
+            if (number % start++ < 1) return false;
+            }
+        return number > 1;
+        }
+    }
+}
+
